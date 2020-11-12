@@ -1,0 +1,16 @@
+﻿  Game.cpp
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(19,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(56,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(56,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(65,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(146,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(154,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(162,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(179,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(187,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(207,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(209,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(225,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(245,20): warning C4018: '<': signed/unsigned mismatch
+  StarFighter Class ver.vcxproj -> C:\Users\Peak\source\repos\StarFighter Class ver\Debug\StarFighter Class ver.exe

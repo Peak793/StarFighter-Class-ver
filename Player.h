@@ -9,6 +9,10 @@ class Player
 public:
 	//Variables
 	float speed = 2.5;
+	int hp;
+	int hpmax = 5;
+	bool isdamaged = false;
+	bool isdead = false;
 
 	//Functions
 	Player();
@@ -17,10 +21,11 @@ public:
 	void initPlayer();
 	void animation();
 	void move(float dirX, float dirY);
-	void setpos(float x,float y);
+	void setpos(float x, float y);
 	const Vector2f getpos() const;
 	void update();
-	void render(RenderTarget &target);
+	void render(RenderTarget& target);
+	FloatRect getGlobalBounds() const;
 
 private:
 	//Varables
@@ -30,8 +35,9 @@ private:
 	Vector2u count;
 	Vector2u currentImage;
 	Clock clock;
+	Clock recovertime;
+	int count;
 	//Functions
 
 
 };
-

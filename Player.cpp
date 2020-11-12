@@ -17,8 +17,8 @@ void Player::initTexture()
 	this->count.y = 1;
 	this->rect.left = 0;
 	this->rect.top = 0;
-	this->rect.width = this->texture.getSize().x/this->count.x;
-	this->rect.height = this->texture.getSize().y/this->count.y;
+	this->rect.width = this->texture.getSize().x / this->count.x;
+	this->rect.height = this->texture.getSize().y / this->count.y;
 	//this->currentImage.x = 0;
 	//this->currentImage.y = 1;
 }
@@ -27,37 +27,44 @@ void Player::initPlayer()
 {
 	this->initTexture();
 	this->sprite.setTexture(this->texture);
-	this->sprite.setOrigin(32,32);
+	this->sprite.setOrigin(32, 32);
 	this->sprite.setTextureRect(this->rect);
 }
 
 void Player::animation()
 {
-	if (this->clock.getElapsedTime().asMilliseconds() >= 100)
+	if (isdamaged == false)
 	{
-		this->currentImage.x += 1;
-		this->rect.left = this->currentImage.x * rect.width;
-		this->sprite.setTextureRect(this->rect);
-		this->clock.restart();
+		if (this->clock.getElapsedTime().asMilliseconds() >= 100)
+		{
+			this->currentImage.x += 1;
+			this->rect.left = this->currentImage.x * rect.width;
+			this->sprite.setTextureRect(this->rect);
+			this->clock.restart();
+		}
+		if (this->currentImage.x == 3)
+		{
+			this->currentImage.x = 0;
+		}
 	}
-	if (this->currentImage.x == 3)
+	else if (isdamaged == true)
 	{
-		this->currentImage.x = 0;
+		
 	}
 }
-void Player::move(float dirX,float dirY)
+void Player::move(float dirX, float dirY)
 {
-		this->sprite.move(dirX * speed, dirY * speed);
+	this->sprite.move(dirX * speed, dirY * speed);
 }
 
 void Player::setpos(float x, float y)
 {
-	this->sprite.setPosition(x,y);
+	this->sprite.setPosition(x, y);
 }
 
 const Vector2f Player::getpos() const
 {
-	return Vector2f(this->sprite.getPosition().x,sprite.getPosition().y);
+	return Vector2f(this->sprite.getPosition().x, sprite.getPosition().y);
 }
 
 void Player::update()
@@ -65,7 +72,12 @@ void Player::update()
 	this->animation();
 }
 
-void Player::render(RenderTarget &target)
+void Player::render(RenderTarget& target)
 {
 	target.draw(this->sprite);
+}
+
+FloatRect Player::getGlobalBounds() const
+{
+	return FloatRect(sprite.getGlobalBounds());
 }
