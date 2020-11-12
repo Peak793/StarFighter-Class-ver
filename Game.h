@@ -3,13 +3,14 @@
 #include "BackGround.h"
 #include "Enemy.h"
 #include "Ebullet.h"
+#include "HpUP.h" 
 using namespace sf;
 class Game
 {
 public:
 	//Variables
 	unsigned enemycount = 0;
-	unsigned enemymax = 8;
+	unsigned enemymax = 20;
 	//Functions
 	Game();
 	~Game();
@@ -28,7 +29,9 @@ public:
 	void enemyUpdate();
 	void enemyAnimation();
 	void collision();
-	void dropping();
+	void dropping(Vector2f Epos);
+	void Dupdate();
+	void RenderD();
 	void renderEnemy();
 	void update();
 	void render();
@@ -43,7 +46,7 @@ private:
 	Texture bullet;
 	bool canShoot;
 	int Btimer;
-	int cooldown;
+	int Fcooldown;
 
 	std::vector<Enemy>enemies;
 	Texture enemy;
@@ -54,6 +57,9 @@ private:
 	Texture ebullet;
 	int EBcooldown;
 	Clock EBtimer;
+
+	std::vector<HpUP>itemHP;
+	Texture hpup;
 
 	BackGround *bg;
 	//Functions

@@ -105,7 +105,7 @@ void Enemy::move()
 	{
 		canshoot = false;
 		sprite.move(0,4);
-		if (sprite.getPosition().y >= 900)
+		if (sprite.getPosition().y >= 932)
 		{
 			isDead = true;
 		}

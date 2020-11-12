@@ -36,6 +36,9 @@
     <ClCompile Include="Ebullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HpUP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ebullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HpUP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,9 +12,9 @@ Player::~Player()
 
 void Player::initTexture()
 {
-	this->texture.loadFromFile("img/PlayerS.png");
+	this->texture.loadFromFile("img/PlayerSprite2.png");
 	this->count.x = 4;
-	this->count.y = 1;
+	this->count.y = 2;
 	this->rect.left = 0;
 	this->rect.top = 0;
 	this->rect.width = this->texture.getSize().x / this->count.x;
@@ -49,7 +49,27 @@ void Player::animation()
 	}
 	else if (isdamaged == true)
 	{
-		
+		if (c == 5)
+		{
+			c = 0;
+			currentImage.y = 0;
+			this->rect.top = this->currentImage.y * rect.height;
+			isdamaged = false;
+		}
+		if (this->clock.getElapsedTime().asMilliseconds() >= 100)
+		{
+			this->currentImage.y = 1;
+			this->rect.top = this->currentImage.y * rect.height;
+			this->currentImage.x += 1;
+			this->rect.left = this->currentImage.x * rect.width;
+			this->sprite.setTextureRect(this->rect);
+			this->clock.restart();
+		}
+		if (this->currentImage.x == 3)
+		{
+			this->currentImage.x = 0;
+			c++;
+		}
 	}
 }
 void Player::move(float dirX, float dirY)

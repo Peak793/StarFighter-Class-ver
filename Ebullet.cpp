@@ -19,6 +19,11 @@ int Ebullet::move()
 	return 0;
 }
 
+FloatRect Ebullet::getGlobalBounds()
+{
+	return FloatRect(ebullet.getGlobalBounds());
+}
+
 void Ebullet::update()
 {
 

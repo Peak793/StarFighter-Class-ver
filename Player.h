@@ -3,6 +3,7 @@
 #include "SFML/Audio.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
+#include <iostream>
 using namespace sf;
 class Player
 {
@@ -35,8 +36,9 @@ private:
 	Vector2u count;
 	Vector2u currentImage;
 	Clock clock;
+	Clock clock2;
 	Clock recovertime;
-	int count;
+	int c=0;
 	//Functions
 
 

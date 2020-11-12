@@ -12,6 +12,7 @@ public:
 	Ebullet(Texture *texture,float posX, float posY, float speed);
 	~Ebullet();
 	int move();
+	FloatRect getGlobalBounds();
 	void update();
 	void render(RenderTarget *target);
 

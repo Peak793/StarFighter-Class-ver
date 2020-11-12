@@ -22,7 +22,7 @@ void Game::InitVariable()
 	this->bullet.loadFromFile("img/Bullet.png");
 	this->Btimer = 0;
 	this->canShoot = true;
-	this->cooldown = 25;
+	this->Fcooldown = 20;
 	this->Scooldown = 150;
 	this->EStimer = this->Scooldown;
 	this->bg = new BackGround();
@@ -30,6 +30,13 @@ void Game::InitVariable()
 
 	this->EBcooldown = 1;
 	ebullet.loadFromFile("img/Ebullet.png");
+
+	hpup.loadFromFile("img/playerLife2_red.png");
+
+	enemies.reserve(10);
+	bullets.reserve(50);
+	ebullets.reserve(10);
+	itemHP.reserve(3);
 }
 
 void Game::InitWindow()
@@ -53,9 +60,9 @@ void Game::InitEnemy()
 	if ((this->EStimer == this->Scooldown && enemycount <enemymax) || (enemycount < 3))
 	{
 		bool temp = rand()%2;
-		enemies.push_back(Enemy(enemy,(1.0+rand()%2)/2,temp, 50.f + rand() % 468,64+(rand()%5*64)));
+		enemies.emplace_back(enemy,(float)((1.0 + rand() % 2) / 2),temp, (float)(50.f + rand() % 468),(float)(64 + (rand() % 5 * 64)));
 		this->EStimer = 0;
-		//for(int i = 0;i<enemies)
+	
 		enemycount++;
 	}
 }
@@ -66,7 +73,7 @@ void Game::InitEBullet()
 	{
 		if (enemies[i].canshoot == true)
 		{
-			ebullets.push_back(Ebullet(&ebullet,enemies[i].getPos().x,enemies[i].getPos().y+32,4));
+			ebullets.emplace_back(&ebullet,enemies[i].getPos().x,enemies[i].getPos().y + 32,5);
 			enemies[i].canshoot = false;
 		}
 	}
@@ -128,7 +135,7 @@ void Game::movePlayer()
 
 void Game::bulletSpawn()
 {
-	if (this->Btimer < this->cooldown)
+	if (this->Btimer < this->Fcooldown)
 		this->Btimer++;
 	else
 		this->canShoot = true;
@@ -136,7 +143,7 @@ void Game::bulletSpawn()
 	if (Keyboard::isKeyPressed(Keyboard::Space) && canShoot == true)
 	{
 		this->canShoot = false;
-		bullets.push_back(Bullet(bullet,player->getpos(),0,-1,5.f));
+		bullets.emplace_back(bullet,player->getpos(),0,-1,10.f);
 		Btimer = 0;
 	}
 }
@@ -178,7 +185,8 @@ void Game::enemyUpdate()
 {
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		enemies[i].update();
+		if(enemies[i].isDead == false)
+			enemies[i].update();
 	}
 }
 
@@ -213,10 +221,11 @@ void Game::collision()
 				bullets.erase(bullets.begin()+i);
 				enemies[k].setRectY(64);
 				enemies[k].hp--;
-				if (enemies[k].hp == 0)
+				if (enemies[k].hp == 0 && enemies[k].getPos().y<900)
 				{
+					random = rand() % 1001;
+					dropping(enemies[k].getPos());
 					enemies[k].isDead = true;
-					random = rand()%1001;
 				}
 				break;
 			}
@@ -224,23 +233,78 @@ void Game::collision()
 	}
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		if (enemies[i].getGlobalBounds().intersects(this->player->getGlobalBounds()))
+		if (enemies[i].getGlobalBounds().intersects(this->player->getGlobalBounds())&& player->isdamaged == false && enemies[i].isDead == false)
 		{
 			enemies[i].isDead = true;
 			player->hp--;
+			player->isdamaged = true;
+		}
+	}
 
+	for (int i = 0; i < ebullets.size(); i++)
+	{
+		if(ebullets[i].getGlobalBounds().intersects(player->getGlobalBounds())&& player->isdamaged == false)
+		{
+			player->hp--;
+			player->isdamaged = true;
+			std::cout << player->isdamaged << std::endl;
+			ebullets.erase(ebullets.begin() + i);
 		}
 	}
 }
 
-void Game::dropping()
+void Game::dropping(Vector2f Epos)
 {
-	if (random >= 1 && random <= 100)
+	if (random >= 1 && random <= 200)
 	{
-		std::cout << "DROP!!" << std::endl;
+		std::cout << "Drop" << std::endl;
+		itemHP.emplace_back(hpup,Epos);
 		random = 0;
 	}
-} 
+}
+
+void Game::Dupdate()
+{
+	for (int i = 0; i < itemHP.size(); i++)
+	{
+		if (itemHP[i].temp == 0)
+		{
+			itemHP[i].timer.restart();
+			itemHP[i].temp++;
+		}
+		else
+		{
+			if (itemHP[i].timer.getElapsedTime().asSeconds() < 3)
+			{
+				if(itemHP[i].getPos().y<850)
+					itemHP[i].update();
+			}
+			else
+			{
+				itemHP.erase(itemHP.begin()+i);
+				break;
+			}
+		}
+
+	}
+
+	for (int i=0;i<itemHP.size();i++)
+	{
+		if (player->getGlobalBounds().intersects(itemHP[i].getGlobalBounds()))
+		{
+			itemHP.erase(itemHP.begin()+i);
+		}
+	}
+}
+
+void Game::RenderD()
+{
+	for (int i = 0; i < itemHP.size(); i++)
+	{
+		itemHP[i].render(*this->window); 
+	}
+}
+
 
 void Game::renderEnemy()
 {
@@ -260,9 +324,9 @@ void Game::update()
 	this->Bmove();
 	this->bg->update();
 	this->collision();
-	this->dropping();
 	this->enemyUpdate();
 	this->enemyAnimation();
+	this->Dupdate();
 }
 
 void Game::render()
@@ -275,5 +339,6 @@ void Game::render()
 	this->player->render(*this->window);
 	this->renderEbullet();
 	this->renderBullet();
+	this->RenderD();
 	this->window->display();
 }
