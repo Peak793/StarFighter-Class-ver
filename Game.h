@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Ebullet.h"
 #include "HpUP.h" 
+#include "UI.h"
 using namespace sf;
 class Game
 {
@@ -62,6 +63,9 @@ private:
 	Texture hpup;
 
 	BackGround *bg;
+
+	UI *ui;
+	unsigned long long score = 0;
 	//Functions
 
 

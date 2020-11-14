@@ -14,6 +14,7 @@ public:
 	int hpmax = 5;
 	bool isdamaged = false;
 	bool isdead = false;
+	bool isgameOver = false;
 
 	//Functions
 	Player();
@@ -26,6 +27,7 @@ public:
 	const Vector2f getpos() const;
 	void update();
 	void render(RenderTarget& target);
+	bool deadAnimation();
 	FloatRect getGlobalBounds() const;
 
 private:
@@ -37,6 +39,7 @@ private:
 	Vector2u currentImage;
 	Clock clock;
 	Clock clock2;
+	Clock clock3;
 	Clock recovertime;
 	int c=0;
 	//Functions

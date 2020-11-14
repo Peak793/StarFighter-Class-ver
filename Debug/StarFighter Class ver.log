@@ -1,20 +1,21 @@
 ﻿  Game.cpp
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(19,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(80,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(153,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(161,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(169,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(186,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(195,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(215,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(217,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(234,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(244,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(268,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(291,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(302,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(311,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(20,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(81,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(154,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(162,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(170,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(187,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(196,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(216,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(218,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(236,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(251,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(278,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(301,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(316,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(325,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(346,14): warning C4244: 'argument': conversion from 'unsigned __int64' to 'int', possible loss of data
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xmemory(671,103): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
@@ -39,7 +40,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=sf::Texture *
           ]
-C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(76): message : see reference to function template instantiation 'void std::vector<Ebullet,std::allocator<Ebullet>>::emplace_back<sf::Texture*,const T,T,int>(sf::Texture *&&,const T &&,T &&,int &&)' being compiled
+C:\Users\Peak\source\repos\StarFighter Class ver\Game.cpp(77): message : see reference to function template instantiation 'void std::vector<Ebullet,std::allocator<Ebullet>>::emplace_back<sf::Texture*,const T,T,int>(sf::Texture *&&,const T &&,T &&,int &&)' being compiled
           with
           [
               T=float

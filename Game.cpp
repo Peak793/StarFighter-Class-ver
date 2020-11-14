@@ -12,17 +12,20 @@ Game::~Game()
 	delete this->window;
 	delete this->player;
 	delete this->bg;
+	delete this->ui;
 }
 
 void Game::InitVariable()
 {
 	srand(time(NULL));
+	this->ui = new UI();
+
 	this->window = nullptr;
 	this->player = nullptr;
 	this->bullet.loadFromFile("img/Bullet.png");
 	this->Btimer = 0;
 	this->canShoot = true;
-	this->Fcooldown = 20;
+	this->Fcooldown = 30;
 	this->Scooldown = 150;
 	this->EStimer = this->Scooldown;
 	this->bg = new BackGround();
@@ -31,7 +34,7 @@ void Game::InitVariable()
 	this->EBcooldown = 1;
 	ebullet.loadFromFile("img/Ebullet.png");
 
-	hpup.loadFromFile("img/playerLife2_red.png");
+	hpup.loadFromFile("img/hpup.png");
 
 	enemies.reserve(10);
 	bullets.reserve(50);
@@ -50,19 +53,17 @@ void Game::InitPlayer()
 {
 	this->player = new Player();
 	this->player->setpos(window->getSize().x / 2.f, window->getSize().y - 50.f);
-	this->player->hp = this->player->hpmax;
 }
 
 void Game::InitEnemy()
 {
 	if (this->EStimer < Scooldown)
 		this->EStimer +=1;
-	if ((this->EStimer == this->Scooldown && enemycount <enemymax) || (enemycount < 3))
+	if ((this->EStimer == this->Scooldown && enemycount <enemymax) || (enemycount < 5))
 	{
 		bool temp = rand()%2;
-		enemies.emplace_back(enemy,(float)((1.0 + rand() % 2) / 2),temp, (float)(50.f + rand() % 468),(float)(64 + (rand() % 5 * 64)));
+		enemies.emplace_back(enemy,(float)((1.0 + rand() % 2) / 2),temp, (float)(50.f + rand() % 468),(float)(100 + (rand() % 5 * 64)));
 		this->EStimer = 0;
-	
 		enemycount++;
 	}
 }
@@ -226,6 +227,7 @@ void Game::collision()
 					random = rand() % 1001;
 					dropping(enemies[k].getPos());
 					enemies[k].isDead = true;
+					score += 100;
 				}
 				break;
 			}
@@ -236,8 +238,13 @@ void Game::collision()
 		if (enemies[i].getGlobalBounds().intersects(this->player->getGlobalBounds())&& player->isdamaged == false && enemies[i].isDead == false)
 		{
 			enemies[i].isDead = true;
-			player->hp--;
+			score += 100;
+			player->hp-=2;
 			player->isdamaged = true;
+			if (player->hp <= 0)
+			{
+				player->isdead = true;
+			}
 		}
 	}
 
@@ -247,8 +254,11 @@ void Game::collision()
 		{
 			player->hp--;
 			player->isdamaged = true;
-			std::cout << player->isdamaged << std::endl;
 			ebullets.erase(ebullets.begin() + i);
+			if (player->hp <= 0)
+			{
+				player->isdead = true;
+			}
 		}
 	}
 }
@@ -293,6 +303,10 @@ void Game::Dupdate()
 		if (player->getGlobalBounds().intersects(itemHP[i].getGlobalBounds()))
 		{
 			itemHP.erase(itemHP.begin()+i);
+			if (player->hp <5)
+			{
+				player->hp++;
+			}
 		}
 	}
 }
@@ -316,17 +330,22 @@ void Game::renderEnemy()
 
 void Game::update()
 {
-	this->InitEnemy();
-	this->InitEBullet();
-	this->player->update();
-	this->movePlayer();
-	this->bulletSpawn();
-	this->Bmove();
-	this->bg->update();
-	this->collision();
-	this->enemyUpdate();
-	this->enemyAnimation();
-	this->Dupdate();
+	if (player->isdead == false || player->isgameOver == false)
+	{
+		this->InitEnemy();
+		this->InitEBullet();
+		this->player->update();
+		this->movePlayer();
+		this->bulletSpawn();
+		this->Bmove();
+		this->bg->update();
+		this->collision();
+		this->enemyUpdate();
+		this->enemyAnimation();
+		this->Dupdate();
+		ui->update(score,player->hp);
+		std::cout << player->hp << std::endl;
+	}
 }
 
 void Game::render()
@@ -340,5 +359,6 @@ void Game::render()
 	this->renderEbullet();
 	this->renderBullet();
 	this->RenderD();
+	ui->render(*this->window);
 	this->window->display();
 }
