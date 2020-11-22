@@ -11,11 +11,16 @@ public:
 	//Variables
 	float speed = 2.5;
 	int hp;
-	int hpmax = 5;
+	int hpmax = 10;
+	float damage = 1;
+	bool isPowerUP = false;
 	bool isdamaged = false;
 	bool isdead = false;
 	bool isgameOver = false;
-
+	int Fcooldown = 25;
+	
+	Clock PowerUPcooldown;
+	int yo=0;
 	//Functions
 	Player();
 	~Player();

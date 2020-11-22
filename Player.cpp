@@ -102,6 +102,23 @@ const Vector2f Player::getpos() const
 void Player::update()
 {
 	this->animation();
+	if (isPowerUP == true)
+	{
+		if (PowerUPcooldown.getElapsedTime().asSeconds() < 5)
+		{
+			damage = 1.5;
+			Fcooldown = 10;
+			speed = 4;
+		}
+		else
+		{
+			isPowerUP = false;
+			damage = 1;
+			Fcooldown = 25;
+			speed = 3;
+			PowerUPcooldown.restart();
+		}
+	}
 }
 
 void Player::render(RenderTarget& target)

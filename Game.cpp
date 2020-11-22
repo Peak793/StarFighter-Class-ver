@@ -25,7 +25,6 @@ void Game::InitVariable()
 	this->bullet.loadFromFile("img/Bullet.png");
 	this->Btimer = 0;
 	this->canShoot = true;
-	this->Fcooldown = 30;
 	this->Scooldown = 150;
 	this->EStimer = this->Scooldown;
 	this->bg = new BackGround();
@@ -35,11 +34,13 @@ void Game::InitVariable()
 	ebullet.loadFromFile("img/Ebullet.png");
 
 	hpup.loadFromFile("img/hpup.png");
+	PUPTEX.loadFromFile("img/bolt_gold.png");
 
 	enemies.reserve(10);
 	bullets.reserve(50);
 	ebullets.reserve(10);
 	itemHP.reserve(3);
+	PUP.reserve(3);
 }
 
 void Game::InitWindow()
@@ -136,7 +137,7 @@ void Game::movePlayer()
 
 void Game::bulletSpawn()
 {
-	if (this->Btimer < this->Fcooldown)
+	if (this->Btimer < player->Fcooldown)
 		this->Btimer++;
 	else
 		this->canShoot = true;
@@ -221,8 +222,8 @@ void Game::collision()
 			{
 				bullets.erase(bullets.begin()+i);
 				enemies[k].setRectY(64);
-				enemies[k].hp--;
-				if (enemies[k].hp == 0 && enemies[k].getPos().y<900)
+				enemies[k].hp -= player->damage;
+				if (enemies[k].hp <= 0 && enemies[k].getPos().y<900)
 				{
 					random = rand() % 1001;
 					dropping(enemies[k].getPos());
@@ -265,10 +266,16 @@ void Game::collision()
 
 void Game::dropping(Vector2f Epos)
 {
-	if (random >= 1 && random <= 200)
+	if (random >= 1 && random <= 50)
 	{
 		std::cout << "Drop" << std::endl;
 		itemHP.emplace_back(hpup,Epos);
+		random = 0;
+	}
+	if (random >= 951 && random <= 1000)
+	{
+		std::cout << "Drop2" << std::endl;
+		PUP.emplace_back(PUPTEX,Epos);
 		random = 0;
 	}
 }
@@ -295,7 +302,38 @@ void Game::Dupdate()
 				break;
 			}
 		}
+	}
 
+	for (int i = 0; i < PUP.size(); i++)
+	{
+		if (PUP[i].temp == 0)
+		{
+			PUP[i].timer.restart();
+			PUP[i].temp++;
+		}
+		else
+		{
+			if (PUP[i].timer.getElapsedTime().asSeconds() < 3)
+			{
+				if (PUP[i].getPos().y < 850)
+					PUP[i].update();
+			}
+			else
+			{
+				PUP.erase(PUP.begin() + i);
+				break;
+			}
+		}
+	}
+
+	for(int i =0;i<PUP.size();i++)
+	{
+		if (player->getGlobalBounds().intersects(PUP[i].getGlobalBounds()))
+		{
+			PUP.erase(PUP.begin()+i);
+			player->isPowerUP = true;
+			player->PowerUPcooldown.restart();
+		}
 	}
 
 	for (int i=0;i<itemHP.size();i++)
@@ -303,9 +341,13 @@ void Game::Dupdate()
 		if (player->getGlobalBounds().intersects(itemHP[i].getGlobalBounds()))
 		{
 			itemHP.erase(itemHP.begin()+i);
-			if (player->hp <5)
+			if (player->hp <10)
 			{
-				player->hp++;
+				player->hp += 3;
+				if (player->hp > 10)
+				{
+					player->hp = 10;
+				}
 			}
 		}
 	}
@@ -316,6 +358,10 @@ void Game::RenderD()
 	for (int i = 0; i < itemHP.size(); i++)
 	{
 		itemHP[i].render(*this->window); 
+	}	
+	for (int i = 0; i < PUP.size(); i++)
+	{
+		PUP[i].render(*this->window);
 	}
 }
 

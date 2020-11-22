@@ -5,6 +5,7 @@
 #include "Ebullet.h"
 #include "HpUP.h" 
 #include "UI.h"
+#include "Power_UP.h"
 using namespace sf;
 class Game
 {
@@ -12,6 +13,7 @@ public:
 	//Variables
 	unsigned enemycount = 0;
 	unsigned enemymax = 20;
+	int progresstion = 0;
 	//Functions
 	Game();
 	~Game();
@@ -47,7 +49,6 @@ private:
 	Texture bullet;
 	bool canShoot;
 	int Btimer;
-	int Fcooldown;
 
 	std::vector<Enemy>enemies;
 	Texture enemy;
@@ -61,6 +62,9 @@ private:
 
 	std::vector<HpUP>itemHP;
 	Texture hpup;
+
+	std::vector<Power_UP>PUP;
+	Texture PUPTEX;
 
 	BackGround *bg;
 
